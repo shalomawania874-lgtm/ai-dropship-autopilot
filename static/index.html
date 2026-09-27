@@ -1,0 +1,7 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NovaCart AI</title><link rel="stylesheet" href="/static/style.css"></head><body>
+<header><div class="brand">NOVACART<span>AI</span></div><a href="/admin">Operator</a></header>
+<main><section class="hero"><p class="eyebrow">AUTONOMOUS COMMERCE</p><h1>Products chosen by data.<br><b>Operations run by AI.</b></h1><p>Real supplier inventory. Real checkout. Real orders. No fake catalog.</p><a class="cta" href="#shop">Shop live products ↓</a></section>
+<section id="shop"><div class="sectionhead"><h2>Live catalog</h2><span id="state">Checking supplier connection…</span></div><div id="products" class="grid"></div></section></main>
+<script>
+async function load(){const h=await fetch('/api/health').then(r=>r.json());document.querySelector('#state').textContent=h.providers.woocommerce?'Store connected':'Store setup required';const ps=await fetch('/api/products').then(r=>r.json());const el=document.querySelector('#products');el.innerHTML=ps.length?ps.map(p=>`<article class="card"><img src="${p.image||''}" onerror="this.style.display='none'"><div><small>LIVE</small><h3>${p.name}</h3><p>${(p.description||'').slice(0,130)}</p><strong>${p.currency} ${Number(p.sale_price).toFixed(2)}</strong></div></article>`).join(''):'<div class="empty">No live products yet. The operator must connect a supplier and publish verified inventory.</div>'}load();
+</script></body></html>
